@@ -1,302 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovaCaption AI PRO | Viral Content Engine</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #10b981;
-            --secondary: #8b5cf6;
-            --bg: #020617;
-            --text: #f8fafc;
-            --card: rgba(255, 255, 255, 0.05);
-            --border: rgba(255, 255, 255, 0.1);
-        }
+  <title>NovaCaption AI</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #0a0a0a;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        * { box-sizing: border-box; transition: all 0.25s ease; margin: 0; padding: 0; }
+    .box {
+      width: 320px;
+      padding: 25px;
+      background: #111;
+      border-radius: 12px;
+      text-align: center;
+    }
 
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-        }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      border: none;
+      background: #222;
+      color: white;
+    }
 
-        .container { width: 100%; max-width: 800px; padding-top: 50px; }
+    button {
+      padding: 10px;
+      margin: 5px;
+      border: none;
+      border-radius: 6px;
+      background: #ff0055;
+      color: white;
+      cursor: pointer;
+    }
 
-        h1 {
-            text-align: center;
-            font-size: clamp(2rem, 8vw, 3.5rem);
-            font-weight: 800;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-
-        .subtitle { text-align: center; opacity: 0.5; margin-bottom: 40px; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; }
-
-        .main-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: clamp(15px, 5vw, 30px);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            margin-bottom: 30px;
-        }
-
-        .categories {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 25px;
-            justify-content: center;
-        }
-
-        .cat {
-            background: var(--card);
-            border: 1px solid var(--border);
-            padding: 8px 16px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        .cat:hover {
-            background: var(--primary);
-            color: #000;
-            transform: translateY(-2px);
-            border-color: var(--primary);
-        }
-
-        input {
-            width: 100%;
-            padding: 18px;
-            border-radius: 14px;
-            border: 1px solid var(--border);
-            background: rgba(0, 0, 0, 0.3);
-            color: #fff;
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            outline: none;
-        }
-
-        input:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(16, 185, 129, 0.1); }
-
-        .btn-generate {
-            width: 100%;
-            padding: 18px;
-            border: none;
-            border-radius: 14px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #fff;
-            font-weight: 800;
-            font-size: 1rem;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-
-        .btn-copy-all {
-            width: 100%;
-            padding: 12px;
-            background: transparent;
-            border: 1px solid var(--secondary);
-            color: var(--secondary);
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            display: none;
-            margin-bottom: 20px;
-        }
-
-        .btn-copy-all:hover { background: var(--secondary); color: #fff; }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(255,255,255,0.1);
-            border-top: 4px solid #10b981;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: auto;
-        }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        .caption-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            animation: slideIn 0.4s ease forwards;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .caption-text { font-size: 1.05rem; line-height: 1.6; color: #e2e8f0; flex: 1; }
-
-        .btn-copy {
-            background: var(--border);
-            color: #fff;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.85rem;
-            margin-left: 15px;
-            white-space: nowrap;
-        }
-
-        .btn-copy:hover { background: var(--primary); color: #000; }
-
-        #toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--primary);
-            color: #000;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-weight: 800;
-            display: none;
-            z-index: 9999;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-    </style>
+    #output {
+      margin-top: 15px;
+      white-space: pre-line;
+      font-size: 14px;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="container">
-    <h1>NovaCaption AI PRO</h1>
-    <p class="subtitle">Premium Viral Content Engine • 2026</p>
+<div class="box">
+  <h3>NovaCaption AI</h3>
 
-    <div class="main-card">
-        <div class="categories">
-            <div class="cat" onclick="setTopic('🌿 Nature')">🌿 Nature</div>
-            <div class="cat" onclick="setTopic('❤️ Love')">❤️ Love</div>
-            <div class="cat" onclick="setTopic('🏏 Cricket')">🏏 Cricket</div>
-            <div class="cat" onclick="setTopic('🚗 Cars')">🚗 Cars</div>
-            <div class="cat" onclick="setTopic('✈️ Travel')">✈️ Travel</div>
-        </div>
+  <input id="input" placeholder="Enter idea">
 
-        <input id="topic" placeholder="Enter topic..." onkeypress="handleEnter(event)">
-        <button class="btn-generate" onclick="generate()">Generate Captions 🚀</button>
-        <button id="copyAllBtn" class="btn-copy-all" onclick="copyAll()">📋 Copy All Variations</button>
-    </div>
+  <br>
 
-    <div id="results"></div>
+  <button onclick="generateCaption()">Generate</button>
+  <button onclick="copyText()">Copy</button>
+
+  <p id="output">Ready...</p>
 </div>
 
-<div id="toast">Copied! ✅</div>
-
 <script>
-    let currentResults = [];
+async function generateCaption() {
+  const input = document.getElementById("input").value;
 
-    function setTopic(t) {
-        document.getElementById("topic").value = t;
-        generate();
-    }
+  document.getElementById("output").innerText = "Generating...";
 
-    function handleEnter(e) { if (e.key === "Enter") generate(); }
+  const res = await fetch("https://novacaption-backend.onrender.com/generate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ prompt: input })
+  });
 
-    function showToast(msg) {
-        const toast = document.getElementById("toast");
-        toast.innerText = msg;
-        toast.style.display = "block";
-        setTimeout(() => toast.style.display = "none", 2000);
-    }
+  const data = await res.json();
 
-    function generate() {
-        let topic = document.getElementById("topic").value.trim();
-        if (!topic) { showToast("Enter a topic! ✍️"); return; }
+  document.getElementById("output").innerText =
+    data.choices?.[0]?.message?.content || "Error";
+}
 
-        let resultsDiv = document.getElementById("results");
-        let copyAllBtn = document.getElementById("copyAllBtn");
-        
-        copyAllBtn.style.display = "none";
-        resultsDiv.innerHTML = `
-        <div style="text-align:center; padding:40px;">
-            <div class="spinner"></div>
-            <p style="opacity:0.7; font-weight:500; margin-top:15px;">🤖 AI is processing...</p>
-        </div>`;
-
-        setTimeout(() => { 
-            resultsDiv.innerHTML = "";
-            
-            let database = [
-                `${topic} hits different when silence speaks 🌿`,
-                `Yeh ${topic} nahi… ek feeling hai bro 😌`,
-                `Lost somewhere inside ${topic} vibes ✨`,
-                `${topic} is not a place… it's peace.`,
-                `हर ${topic} में सुकून मिलता है 🌿`,
-                `${topic} therapy hai bina bolke 💚`,
-                `${topic} ke beech asli life milti hai`,
-                `No stress… just ${topic} and vibes`,
-                `${topic} is my kind of happiness`,
-                `${topic} >>> everything else`,
-                `Sometimes ${topic} says more than words`,
-                `Dil ko sukoon milta hai ${topic} me`,
-                `${topic} never disappoints`,
-                `This is what ${topic} feels like`,
-                `${topic} is where I reset myself 🔄`,
-                `Zindagi fast hai… par ${topic} slow hai ❤️`,
-                `Bro ${topic} vibe next level hai`,
-                `No caption needed… just ${topic}`,
-                `Yeh ${topic} moment yaad rahega.`,
-                `${topic} + peace = happiness unlocked 🔓`,
-                `Legends don’t talk… they feel ${topic}.`
-            ];
-
-            currentResults = database.sort(() => 0.5 - Math.random()).slice(0, 8);
-            copyAllBtn.style.display = "block";
-
-            currentResults.forEach((text, i) => {
-                setTimeout(() => {
-                    let div = document.createElement("div");
-                    div.className = "caption-card";
-                    div.innerHTML = `
-                        <div class="caption-text">${text}</div>
-                        <button class="btn-copy" onclick="copySingle(this, '${text.replace(/'/g, "\\'")}')">Copy</button>
-                    `;
-                    resultsDiv.appendChild(div);
-                }, i * 120);
-            });
-        }, 1200);
-    }
-
-    function copySingle(btn, text) {
-        navigator.clipboard.writeText(text);
-        btn.innerText = "✓ Done";
-        btn.style.background = "var(--primary)";
-        btn.style.color = "#000";
-        showToast("Copied to clipboard! ✅");
-        setTimeout(() => { btn.innerText = "Copy"; btn.style.background = ""; btn.style.color = ""; }, 1500);
-    }
-
-    function copyAll() {
-        if (currentResults.length > 0) {
-            navigator.clipboard.writeText(currentResults.join("\n\n"));
-            showToast("All variations copied! 🔥");
-        }
-    }
+function copyText() {
+  const text = document.getElementById("output").innerText;
+  navigator.clipboard.writeText(text);
+}
 </script>
 
 </body>
